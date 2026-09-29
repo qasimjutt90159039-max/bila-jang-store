@@ -1,3 +1,5 @@
+import { generatePartSvg } from '../utils/partSvgRenders';
+
 export const CONDITIONS = [
   {
     id: 'kabli',
@@ -1095,3 +1097,32 @@ export const PRODUCTS_DATABASE = [
     }
   }
 ];
+
+// Helper to assign reliable, rich vector graphic for each auto part
+function getProductSvg(product) {
+  const name = (product.name + ' ' + product.category).toLowerCase();
+  let type = 'generic';
+  let color = '#DC2626';
+
+  if (product.condition === 'kabli') color = '#0284C7';
+  else if (product.condition === 'oem') color = '#16A34A';
+  else color = '#F59E0B';
+
+  if (name.includes('gearbox') || name.includes('transmission')) type = 'gearbox';
+  else if (name.includes('engine') || name.includes('cylinder') || name.includes('turbo') || name.includes('injector')) type = 'engine';
+  else if (name.includes('shock') || name.includes('strut') || name.includes('control arm') || name.includes('arm') || name.includes('steering')) type = 'shock';
+  else if (name.includes('brake') || name.includes('rotor') || name.includes('pad') || name.includes('abs') || name.includes('drum') || name.includes('actuator')) type = 'brake';
+  else if (name.includes('headlight') || name.includes('tail') || name.includes('mirror') || name.includes('bumper') || name.includes('skirts') || name.includes('lighting')) type = 'headlight';
+  else if (name.includes('compressor')) type = 'compressor';
+  else if (name.includes('radiator') || name.includes('condenser') || name.includes('fan') || name.includes('cooling')) type = 'radiator';
+  else if (name.includes('ecu') || name.includes('computer') || name.includes('sensor')) type = 'ecu';
+  else if (name.includes('alternator') || name.includes('starter')) type = 'alternator';
+
+  return generatePartSvg(type, product.name, product.oemNumber, color);
+}
+
+// Assign generated vector visual for every part so no image ever fails or returns 404
+PRODUCTS_DATABASE.forEach(p => {
+  p.image = getProductSvg(p);
+});
+

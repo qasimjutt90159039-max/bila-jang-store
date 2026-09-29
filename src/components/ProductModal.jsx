@@ -9,6 +9,7 @@ import {
   getPartInspectionVideoWhatsAppUrl 
 } from '../utils/whatsapp';
 import { CONDITIONS } from '../data/products';
+import AutoPartImage from './AutoPartImage';
 
 export default function ProductModal({ 
   product, 
@@ -74,9 +75,12 @@ export default function ProductModal({
             {/* Left: Product Media Section */}
             <div className="space-y-4">
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 border border-slate-700">
-                <img 
+                <AutoPartImage 
                   src={product.image} 
                   alt={product.name}
+                  name={product.name}
+                  category={product.category}
+                  oem={product.oemNumber}
                   className="w-full h-full object-cover" 
                 />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">

@@ -4,6 +4,7 @@ import {
   ShieldCheck, Truck, Plus, Minus
 } from 'lucide-react';
 import { formatPKR, buildWhatsAppUrl } from '../utils/whatsapp';
+import AutoPartImage from './AutoPartImage';
 
 export default function CartDrawer({ 
   isOpen, 
@@ -88,9 +89,12 @@ Please check stock at your Bilal Ganj depot and send payment / Bilty cargo detai
             ) : (
               cartItems.map((item) => (
                 <div key={item.id} className="py-4 first:pt-0 last:pb-0 flex gap-3">
-                  <img 
+                  <AutoPartImage 
                     src={item.image} 
                     alt={item.name} 
+                    name={item.name}
+                    category={item.category}
+                    oem={item.oemNumber}
                     className="w-16 h-16 object-cover rounded-xl border border-slate-700 bg-slate-900 shrink-0" 
                   />
                   <div className="flex-1 flex flex-col justify-between">

@@ -9,6 +9,7 @@ import {
   getPartInspectionVideoWhatsAppUrl 
 } from '../utils/whatsapp';
 import { CONDITIONS } from '../data/products';
+import AutoPartImage from './AutoPartImage';
 
 export default function ProductCard({ 
   product, 
@@ -65,11 +66,13 @@ export default function ProductCard({
       
       {/* Top Image Section */}
       <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
-        <img 
+        <AutoPartImage 
           src={product.image} 
           alt={product.name}
+          name={product.name}
+          category={product.category}
+          oem={product.oemNumber}
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
         />
 
         {/* Dark subtle gradient overlay */}

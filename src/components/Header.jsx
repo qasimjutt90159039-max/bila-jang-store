@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Search, ShoppingCart, Wrench, Phone, 
-  MapPin, ShieldCheck, Sun, Moon, Car, X, Sparkles
+  Sun, Moon, Car, X, Sparkles, Truck
 } from 'lucide-react';
 import { HELPLINE_PHONE, WHATSAPP_NUMBER, formatPKR } from '../utils/whatsapp';
+import AutoPartImage from './AutoPartImage';
 
 export default function Header({ 
   cartCount, 
@@ -50,46 +51,6 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#0B0F17]/95 dark:bg-[#0B0F17]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
-      {/* Top Utility Announcement Bar */}
-      <div className="bg-gradient-to-r from-red-950 via-slate-900 to-slate-950 text-xs py-1.5 px-4 text-slate-300 border-b border-red-900/30">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center space-x-3 text-[11px] sm:text-xs">
-            <span className="flex items-center text-emerald-400 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block mr-1.5"></span>
-              Bilal Ganj Depot Open: 9:00 AM - 9:00 PM PKT
-            </span>
-            <span className="hidden md:inline text-slate-500">|</span>
-            <span className="hidden md:flex items-center text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-red-500 mr-1" />
-              Circular Road, Bilal Ganj, Lahore
-            </span>
-            <span className="hidden lg:inline text-slate-500">|</span>
-            <span className="hidden lg:flex items-center text-amber-400 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1" />
-              Rating 4.6 / 5.0 (Bilal Ganj Verified Merchant)
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-4 ml-auto text-[11px] sm:text-xs">
-            <button 
-              onClick={onOpenCargoModal}
-              className="text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer"
-            >
-              📦 Bilty & Cargo Rates
-            </button>
-            <a 
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=Salam%20Bilal%20Ganj%20Auto%20Parts!%20I%20have%20an%20inquiry.`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center text-emerald-400 hover:text-emerald-300 font-bold"
-            >
-              <Phone className="w-3 h-3 mr-1 text-emerald-400" />
-              <span className="hidden sm:inline">Helpline:</span> {HELPLINE_PHONE}
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 py-3 sm:py-3.5">
         <div className="flex items-center justify-between gap-3 sm:gap-6">
@@ -159,9 +120,12 @@ export default function Header({
                       className="p-2.5 hover:bg-slate-700/60 cursor-pointer flex items-center justify-between gap-3 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <img 
+                        <AutoPartImage 
                           src={item.image} 
                           alt={item.name} 
+                          name={item.name}
+                          category={item.category}
+                          oem={item.oemNumber}
                           className="w-10 h-10 object-cover rounded-lg border border-slate-700 shrink-0" 
                         />
                         <div>
@@ -196,6 +160,28 @@ export default function Header({
           {/* Right Action Buttons */}
           <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
             
+            {/* Cargo / Bilty Rates Button */}
+            <button
+              onClick={onOpenCargoModal}
+              className="hidden md:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800/80 hover:bg-slate-700 text-sky-400 border border-slate-700 transition cursor-pointer"
+              title="View Daewoo & Faisal Movers Bilty Cargo rates & transit schedules"
+            >
+              <Truck className="w-3.5 h-3.5 text-sky-400" />
+              <span>Bilty Rates</span>
+            </button>
+
+            {/* Helpline Quick WhatsApp Link */}
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=Salam%20Bilal%20Ganj%20Auto%20Parts!`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden xl:flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-500/40 transition"
+              title="Chat with Bilal Ganj parts desk"
+            >
+              <Phone className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{HELPLINE_PHONE}</span>
+            </a>
+
             {/* Custom Sourcing Quote Button */}
             <button
               onClick={onOpenCustomPartModal}
